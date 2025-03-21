@@ -161,6 +161,14 @@ vim.opt.scrolloff = 10
 -- See `:help 'confirm'`
 vim.opt.confirm = true
 
+vim.opt.tabstop = 4 -- width of a tab character
+vim.opt.softtabstop = 2 -- Fine tunes the amount of whitespace to add
+vim.opt.shiftwidth = 2 -- spaces for autoindent
+vim.opt.expandtab = true -- Use spaces instead of tab
+vim.opt.smarttab = true -- tab key behaviour based on the position
+vim.opt.autoindent = true -- Copy indent from the current line
+vim.opt.smartindent = true -- Automatically insert indent in appropriate position
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
