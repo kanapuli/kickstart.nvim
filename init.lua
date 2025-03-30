@@ -228,6 +228,36 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
+-- [[ Open the file at the last left position ]]
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = { '*' },
+  callback = function()
+    if vim.fn.line '\'"' > 1 and vim.fn.line '\'"' <= vim.fn.line '$' then
+      vim.api.nvim_exec('normal! g\'"', false)
+    end
+  end,
+})
+
+-- [[ Neovim 0.11 configs by Athavan ]]
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client == nil then
+      return
+    end
+    if client:supports_method 'textDocument/completion' then
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
+    end
+  end,
+})
+
+vim.diagnostic.config { virtual_lines = true, virtual_text = false }
+
+-- [[ End of Neovim 0.11 configs by Athavan ]]
+--
+--
+--
 -- [[ Configure and install plugins ]]
 --
 --  To check the current status of your plugins, run
