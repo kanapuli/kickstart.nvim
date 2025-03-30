@@ -97,6 +97,8 @@ vim.g.have_nerd_font = true
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
+--
+vim.opt.laststatus = 3
 
 -- Make line numbers default
 vim.opt.number = true
@@ -1065,6 +1067,33 @@ require('lazy').setup({
     },
   },
 })
+
+require('codecompanion').setup {
+  adapters = {
+    openrouter = function()
+      return require('codecompanion.adapters').extend('openai_compatible', {
+        env = {
+          url = 'https://openrouter.ai/api',
+          api_key = 'OPENROUTER_API_KEY',
+          chat_url = '/v1/chat/completions',
+        },
+        schema = {
+          model = {
+            default = 'deepseek/deepseek-chat-v3-0324',
+          },
+        },
+      })
+    end,
+  },
+  strategies = {
+    chat = {
+      adapter = 'openrouter',
+    },
+    inline = {
+      adapter = 'openrouter',
+    },
+  },
+}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
