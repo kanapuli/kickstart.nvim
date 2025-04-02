@@ -1079,7 +1079,8 @@ require('codecompanion').setup {
         },
         schema = {
           model = {
-            default = 'deepseek/deepseek-chat-v3-0324',
+            -- default = 'deepseek/deepseek-chat-v3-0324',
+            default = 'mistralai/codestral-2501',
           },
         },
       })
@@ -1094,6 +1095,8 @@ require('codecompanion').setup {
     },
   },
 }
+
+require 'athavan.terminal'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

@@ -2,11 +2,11 @@ return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
   version = false, -- Never set this value to "*"! Never!
-  enabled = false,
+  enabled = true,
   opts = {
     -- add any opts here
     -- for example
-    provider = 'openai',
+    provider = 'ollama',
     openai = {
       endpoint = 'https://openrouter.ai/api/v1',
       model = 'deepseek/deepseek-chat-v3-0324', -- your desired model (or use gpt-4o, etc.)
@@ -22,6 +22,9 @@ return {
       temperature = 0,
       max_tokens = 4096,
       disable_tools = true,
+    },
+    ollama = {
+      model = 'qwen2.5-coder-max:latest',
     },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
