@@ -5,4 +5,4 @@ T = function()
   vim.cmd 'startinsert'
 end
 
-vim.keymap.set('n', '<C-t>', ':lua T()<CR>', { desc = 'Open terminal in split' })
+vim.keymap.set('n', '<leader>tt', ':lua T()<CR>', { desc = 'Open terminal in split' })

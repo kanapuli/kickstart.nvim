@@ -27,7 +27,21 @@ vim.keymap.set('n', '*', '*zz', { silent = true })
 vim.keymap.set('n', '#', '#zz', { silent = true })
 vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
 
+-- Lazygit keymap
+vim.keymap.set('n', '<leader>lg', ':LazyGit<CR>', { silent = true })
+
 -- "very magic" (less escaping needed) regexes by default
 vim.keymap.set('n', '?', '?\\v')
 vim.keymap.set('n', '/', '/\\v')
 vim.keymap.set('c', '%s/', '%sm/')
+
+-- Codecompanion keymaps
+vim.keymap.set('v', '<localleader>cc', function()
+  require('codecompanion').chat {}
+end, { noremap = true, silent = true })
+vim.keymap.set('t', '<localleader>cc', function()
+  require('codecompanion').chat {}
+end, { noremap = true, silent = true })
+vim.keymap.set('n', '<localleader>cc', function()
+  require('codecompanion').chat {}
+end, { noremap = true, silent = true })
