@@ -88,7 +88,7 @@ P.S. You can delete this when you're done too. It's your config now! :)
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.maplocalleader = ','
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -254,7 +254,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-vim.diagnostic.config { virtual_lines = true, virtual_text = false }
+vim.diagnostic.config { virtual_lines = false, virtual_text = true }
 
 -- [[ End of Neovim 0.11 configs by Athavan ]]
 --
@@ -708,6 +708,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         gopls = {},
+        -- ruff = {},
         pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -1067,34 +1068,6 @@ require('lazy').setup({
     },
   },
 })
-
-require('codecompanion').setup {
-  adapters = {
-    openrouter = function()
-      return require('codecompanion.adapters').extend('openai_compatible', {
-        env = {
-          url = 'https://openrouter.ai/api',
-          api_key = 'OPENROUTER_API_KEY',
-          chat_url = '/v1/chat/completions',
-        },
-        schema = {
-          model = {
-            -- default = 'deepseek/deepseek-chat-v3-0324',
-            default = 'mistralai/codestral-2501',
-          },
-        },
-      })
-    end,
-  },
-  strategies = {
-    chat = {
-      adapter = 'openrouter',
-    },
-    inline = {
-      adapter = 'openrouter',
-    },
-  },
-}
 
 require 'athavan.terminal'
 require 'athavan.keymaps'
