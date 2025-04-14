@@ -14,7 +14,6 @@ return {
       timeout = 3000,
     },
     picker = {
-      prompt = ' ',
       sources = {},
       focus = 'input',
       layout = {
