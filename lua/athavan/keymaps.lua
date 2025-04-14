@@ -5,6 +5,9 @@ vim.keymap.set('n', '<leader>o', '<C-w>o', { desc = 'Close other windows' })
 --  Remap C-s to save
 vim.keymap.set('n', '<C-s>', ':w<CR>')
 vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>')
+-- Remap Cmd-s to save
+vim.keymap.set('n', '<D-s>', ':w<CR>')
+vim.keymap.set('i', '<D-s>', '<Esc>:w<CR>')
 
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
