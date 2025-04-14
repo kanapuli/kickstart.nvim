@@ -6,6 +6,7 @@ return {
   {
     'ggandor/leap.nvim',
     dependencies = { 'tpope/vim-repeat' },
+    enabled = false,
     config = function()
       local leap = require 'leap'
 
