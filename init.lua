@@ -253,7 +253,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-
+--
 vim.diagnostic.config { virtual_lines = false, virtual_text = true }
 
 -- [[ End of Neovim 0.11 configs by Athavan ]]
@@ -525,7 +525,7 @@ require('lazy').setup({
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
-      'saghen/blink.cmp',
+      -- 'saghen/blink.cmp',
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -952,7 +952,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
 
@@ -1074,6 +1074,34 @@ require('lazy').setup({
 
 require 'athavan.terminal'
 require 'athavan.keymaps'
+
+-- require('gruvbox').setup {
+--   terminal_colors = true, -- add neovim terminal colors
+--   undercurl = true,
+--   underline = true,
+--   bold = true,
+--   italic = {
+--     strings = true,
+--     emphasis = true,
+--     comments = true,
+--     operators = false,
+--     folds = true,
+--   },
+--   strikethrough = true,
+--   invert_selection = false,
+--   invert_signs = false,
+--   invert_tabline = false,
+--   invert_intend_guides = false,
+--   inverse = true, -- invert background for search, diffs, statuslines and errors
+--   contrast = '', -- can be "hard", "soft" or empty string
+--   palette_overrides = {},
+--   overrides = {},
+--   dim_inactive = false,
+--   transparent_mode = false,
+-- }
+vim.o.background = 'dark'
+-- vim.cmd [[ colorscheme gruvbox]]
+vim.cmd [[colorscheme onedark]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
