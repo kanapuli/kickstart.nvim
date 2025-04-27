@@ -90,6 +90,9 @@ P.S. You can delete this when you're done too. It's your config now! :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 
+-- set font size
+vim.o.guifont = 'FiraCode Nerd Font:18'
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -1101,9 +1104,9 @@ require 'athavan.keymaps'
 --   dim_inactive = false,
 --   transparent_mode = false,
 -- }
-vim.o.background = 'dark'
+-- vim.o.background = 'dark'
 -- vim.cmd [[ colorscheme gruvbox]]
-vim.cmd [[colorscheme kanagawa]]
+vim.cmd [[colorscheme onedark]]
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
