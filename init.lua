@@ -221,6 +221,22 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- I use ruff and pyright. Defer ruff for certain capabilities like textDocument/hover
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client == nil then
+      return
+    end
+    if client.name == 'ruff' then
+      -- Disable hover in favor of Pyright
+      client.server_capabilities.hoverProvider = false
+    end
+  end,
+  desc = 'LSP: Disable hover capability from Ruff',
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -519,8 +535,8 @@ require('lazy').setup({
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'williamboman/mason.nvim', opts = {} },
-      'williamboman/mason-lspconfig.nvim',
+      { 'williamboman/mason.nvim', version = '^1.0.0', opts = {} },
+      { 'williamboman/mason-lspconfig.nvim', version = '^1.0.0' },
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
@@ -713,9 +729,28 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         gopls = {},
-        ruff = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        ruff = {
+          init_options = {
+            settings = {
+              logLevel = 'debug',
+            },
+          },
+        },
+        pyright = {
+          settings = {
+            pyright = {
+              -- Using Ruff's import organizer
+              disableOrganizeImports = true,
+            },
+            python = {
+              analysis = {
+                -- Ignore all files for analysis to exclusively use Ruff for linting
+                ignore = { '*' },
+              },
+            },
+          },
+        },
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -760,20 +795,20 @@ require('lazy').setup({
         'gopls', -- Used for go code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-      vim.lsp.config('ruff', {
-        init_options = {
-          settings = {
-            -- Ruff language server settings go here
-            ['ruff'] = {},
-          },
-        },
-      })
+      -- vim.lsp.config('ruff', {
+      --   init_options = {
+      --     settings = {
+      --       -- Ruff language server settings go here
+      --       logLevel = 'debug',
+      --     },
+      --   },
+      -- })
 
-      vim.lsp.enable 'ruff'
+      -- vim.lsp.enable 'ruff'
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-        automatic_installation = false,
+        automatic_installation = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -1019,7 +1054,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'go', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'go', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'ninja', 'rst' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -1089,6 +1124,7 @@ require('lazy').setup({
 
 require 'athavan.terminal'
 require 'athavan.keymaps'
+require 'athavan.options'
 
 -- require('gruvbox').setup {
 --   terminal_colors = true, -- add neovim terminal colors
